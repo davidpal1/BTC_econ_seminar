@@ -9,3 +9,4 @@ from loguru import logger
 from strenum import StrEnum
 from statsmodels.tsa.seasonal import seasonal_decompose
 import matplotlib.pyplot as plt
+import gc
