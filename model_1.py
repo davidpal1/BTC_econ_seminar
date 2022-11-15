@@ -1,11 +1,21 @@
 from statsmodels.tsa.seasonal import seasonal_decompose
 
 """pripraveni casu - cena BTC"""
-dates_list = [datetime.strptime(date, "%Y-%m-%d %H:%M:%S") for date in dataset["time"]]
-dates_list_round_minute = [date.replace(second=0) for date in dates_list]
-BTC_dnes[BTC_dnes["cas"].isin(dates_list_round_minute)]["open"]
+
+dataset["minutes"]= [datetime.strptime(date, "%Y-%m-%d %H:%M:%S") for date in dataset["time"]]
+dataset["min_down"] = [date.replace(second=0) for date in dataset["minutes"]]
+dataset["BTC_open"] = [float(BTC_dnes[BTC_dnes["cas"]==date]["open"]) for date in dataset["min_down"]]
 
 
-decompose = seasonal_decompose(BTC_dnes['open'],model='additive', period=7)
-decompose.plot()
-plt.show()
+"""
+for date in dataset["minutes"]
+
+"""
+import pyflux as pf
+
+model = pf.ARIMAX(data=dataset, formula='BTC_open~1+sum_of_satoshi+number_of_txs',
+                  ar=1, ma=1, family=pf.Normal())
+x = model.fit("MLE")
+x.summary()
+
+
