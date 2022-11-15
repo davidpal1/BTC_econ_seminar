@@ -18,11 +18,9 @@ BTC_cena['cas'] = pd.to_datetime(
                           BTC_cena["cas"],
                           format="%Y-%m-%d %H:%M:%S")
 
-cas_start=datetime(year=2022,month=9,day=1,hour=0,minute=0,second=0)
+cas_start=datetime(year=2022,month=8,day=31,hour=23,minute=59,second=59)
 cas_end=datetime(year=2022,month=9,day=1,hour=23,minute=59,second=59)
 
 BTC_dnes=BTC_cena.loc[BTC_cena["cas"] >cas_start]
 BTC_dnes=BTC_dnes.loc[BTC_dnes["cas"] <cas_end]
-
-#vyresetovani indexu
 BTC_dnes=BTC_dnes.reset_index()
